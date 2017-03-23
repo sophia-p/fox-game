@@ -151,7 +151,7 @@ var Platform = function(x,y,type){
   if (type === 1){
     that.firstColor = "#aadd00";
     that.secondColor = "#698b22";
-    that.onCollide() = function(){
+    that.onCollide = function(){
       player.fallStop();
       player.jumpSpeed = 50;
     };
