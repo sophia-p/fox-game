@@ -187,17 +187,27 @@ var generatePlatforms = function(){
   }
 }();
 
+var checkCollision = function(){
+  platforms.forEach(function(event, index){
+    if ((player.isFalling) && (player.X < event.x + platformWidth) && (player.X + platform.width > event.x) && (player.Y + player.height > event.y) && (player.Y + player.height < event.y + platformHeight)){
+      event.onCollide();
+    }
+  });
+}
+
 /////////////// game loop
 var gameLoop = function(){
   clear();
-  moveCircles(5);
+  // moveCircles(5);
   drawCircles();
   if (player.isJumping) player.checkJump();
   if (player.isFalling) player.checkFall();
-  player.draw();
+  // player.draw();
   platforms.forEach(function(platform){
     platform.draw();
   });
+  checkCollision();
+  player.draw();
   gLoop = setTimeout(gameLoop, 1000/50);
 }
 gameLoop();
