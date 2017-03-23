@@ -151,7 +151,7 @@ var Platform = function(x,y,type){
   if (type === 1){
     that.firstColor = "#aadd00";
     that.secondColor = "#698b22";
-    that.onCollide() = function(){
+    that.onCollide = function(){
       player.fallStop();
       player.jumpSpeed = 50;
     };
@@ -187,17 +187,33 @@ var generatePlatforms = function(){
   }
 }();
 
+var checkCollision = function(){
+  platforms.forEach(function(e, ind){
+    if (
+      (player.isFalling) &&
+      (player.X < e.x + platformWidth) &&
+      (player.X + player.width > e.x) &&
+      (player.Y + player.height > e.y) &&
+      (player.Y + player.height < e.y + platformHeight)
+      ) {
+      e.onCollide();
+    }
+  })
+}
+
 /////////////// game loop
 var gameLoop = function(){
   clear();
-  moveCircles(5);
+  // moveCircles(5);
   drawCircles();
   if (player.isJumping) player.checkJump();
   if (player.isFalling) player.checkFall();
-  player.draw();
+  // player.draw();
   platforms.forEach(function(platform){
     platform.draw();
   });
+  checkCollision();
+  player.draw();
   gLoop = setTimeout(gameLoop, 1000/50);
 }
 gameLoop();
