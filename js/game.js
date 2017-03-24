@@ -58,8 +58,8 @@ var player = new (function(){
 
   that.image = new Image();
   that.image.src = "images/fox_32.png";
-  that.width = 65;
-  that.height = 95;
+  that.width = 32;
+  that.height = 32;
 
   that.X=0;
   that.Y=0;
@@ -118,11 +118,11 @@ var player = new (function(){
       that.setPosition(that.X, that.Y + that.fallSpeed);
       that.fallSpeed ++;
     } else {
-      if (points == 0){
+      if (points == 0)
       that.fallStop;
-      } else {
-        gameOver;
-      }
+       else
+        gameOver();
+
     }
   }
 
@@ -266,7 +266,7 @@ var gameOver = function(){
     ctx.fillStyle = "black";
     ctx.font = "10pt Helvetica";
     ctx.fillText("GAME OVER", width/2 - 60, height/2 - 50);
-    ctx.fillText("SCORE: " + points, width/2 - 60, height/2 - 50);
+    ctx.fillText("SCORE: " + points, width/2 - 60, height/2 - 30);
   }, 100)
 }
 gameLoop();
