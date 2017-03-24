@@ -14,7 +14,7 @@ canvas.width = width;
 canvas.height = height;
 
 var clear = function(){
-  ctx.fillStyle = '#d0e7f9';
+  ctx.fillStyle = '#0b261d';
 
   ctx.beginPath();
   ctx.rect(0,0,width,height);
@@ -29,7 +29,7 @@ for(var i=0; i< howManyCircles; i++){
   }
 var drawCircles = function(){
     for(var i=0; i < howManyCircles; i++){
-      ctx.fillStyle = 'rgba(255,255,255, ' + circles[i][3] +')';
+      ctx.fillStyle = 'rgba(0,0,0, ' + circles[i][3] +')';
       ctx.beginPath();
       ctx.arc(circles[i][0], circles[i][1], circles[i][2], 0, Math.PI * 2, true);
       ctx.closePath;
@@ -171,14 +171,16 @@ var numberOfPlatforms = 7,
   platformHeight = 20;
 var Platform = function(x,y,type){
   var that = this;
-  that.firstColor = "#ff8c00";
-  that.secondColor = "#eeee00";
+    that.firstColor = "#3d1f03"; //center
+    that.secondColor = "#211001";
   that.onCollide = function(){
     player.fallStop();
   };
   if (type === 1){
-    that.firstColor = "#aadd00";
-    that.secondColor = "#698b22";
+      that.firstColor = "#264418"; //center
+      that.secondColor = "#4b7c33";
+    // that.firstColor = "#3d1f03"; //center
+    // that.secondColor = "#211001";
     that.onCollide = function(){
       player.fallStop();
       player.jumpSpeed = 50;
