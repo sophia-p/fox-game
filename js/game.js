@@ -179,8 +179,7 @@ var Platform = function(x,y,type){
   if (type === 1){
       that.firstColor = "#264418"; //center
       that.secondColor = "#4b7c33";
-    // that.firstColor = "#3d1f03"; //center
-    // that.secondColor = "#211001";
+
     that.onCollide = function(){
       player.fallStop();
       player.jumpSpeed = 50;
@@ -232,6 +231,12 @@ var checkCollision = function(){
     }
   })
 }
+///////////////// catching
+// var numberOf = 7,
+//   platforms = [],
+//   platformWidth = 70,
+//   platformHeight = 20;
+
 
 /////////////// game loop
 var gameLoop = function(){
