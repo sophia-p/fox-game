@@ -6,6 +6,8 @@
 var width = 320,
     height = 500,
     gLoop,
+    points = 0,
+    state = true,
     canvas = document.getElementById("canvas"),
     ctx = canvas.getContext('2d');
 canvas.width = width;
@@ -58,6 +60,7 @@ var player = new (function(){
   that.image.src = "images/fox_32.png";
   that.width = 65;
   that.height = 95;
+
   that.X=0;
   that.Y=0;
   that.isJumping = false;
@@ -74,7 +77,26 @@ var player = new (function(){
   }
 
   that.checkJump = function(){
+    if (that.Y > height * 0.4) {
     that.setPosition(that.X, that.Y - that.jumpSpeed);
+    } else {
+      if (that.jumpSpeed > 10)
+        points ++;
+
+      moveCircles(that.jumpSpeed * 0.5);
+      platforms.forEach(function(platform, index){
+        platform.y += that.jumpSpeed;
+        if (platform.y > height){
+          var type = Math.floor(Math.random() * 5);
+          if (type == 0)
+            type = 1
+           else
+            type = 0;
+            platforms[index] = new Platform(Math.random() * (width - platformWidth), platform.y - height, type);
+
+        }
+      });
+    }
     that.jumpSpeed --;
     if (that.jumpSpeed == 0){
       that.isJumping = false;
@@ -83,19 +105,25 @@ var player = new (function(){
     }
   }
 
-  that.checkFall = function(){
-    if(that.Y < height - that.height){
-      that.setPosition(that.X, that.Y + that.fallSpeed);
-      that.fallSpeed ++;
-    } else {
-      that.fallStop;
-    }
-  }
+
 
   that.fallStop = function(){
     that.isFalling = false;
     that.fallSpeed = 0;
     that.jump();
+  }
+
+    that.checkFall = function(){
+    if(that.Y < height - that.height){
+      that.setPosition(that.X, that.Y + that.fallSpeed);
+      that.fallSpeed ++;
+    } else {
+      if (points == 0){
+      that.fallStop;
+      } else {
+        gameOver;
+      }
+    }
   }
 
   that.setPosition = function(x,y){
@@ -125,7 +153,7 @@ var player = new (function(){
   }
 })();
 
-player.setPosition( Math.floor((width - player.width)/2), Math.floor((height - player.height)/2) );
+player.setPosition( Math.floor((width - player.width)/2), height - player.height );
 player.jump();
 
 document.onmousemove = function(event){
@@ -159,6 +187,8 @@ var Platform = function(x,y,type){
   that.x = Math.floor(x);
   that.y = y;
   that.type = type;
+  that.isMoving = Math.floor(Math.random() * 2);
+  that.direction = Math.floor(Math.random() * 2) ? -1 : 1;
 
     that.draw = function(){
       ctx.fillStyle = 'rgba(255,255,255,1)';
@@ -169,7 +199,7 @@ var Platform = function(x,y,type){
         ctx.fillRect(that.x, that.y, platformWidth, platformHeight);
 
 
-  }
+  };
   return that;
 };
 
@@ -208,12 +238,35 @@ var gameLoop = function(){
   drawCircles();
   if (player.isJumping) player.checkJump();
   if (player.isFalling) player.checkFall();
-  // player.draw();
-  platforms.forEach(function(platform){
+  player.draw();
+  platforms.forEach(function(platform, index){
+    if (platform.isMoving){
+      if (platform.x < 0){
+        platform.direction = 1;
+      } else if (platform.x > width - platformWidth){
+        platform.direction = -1;
+      }
+      platform.x += platform.direction * (index/2) * Math.floor(points/100);
+    }
     platform.draw();
   });
   checkCollision();
-  player.draw();
-  gLoop = setTimeout(gameLoop, 1000/50);
+  ctx.fillStyle = "black";
+  ctx.fillText("Points:" + points, 10, height-10);
+  if (state)
+    gLoop = setTimeout(gameLoop, 1000/50);
+
+}
+
+var gameOver = function(){
+  state = false;
+  clearTimeout(gLoop);
+  setTimeout(function(){
+    clear();
+    ctx.fillStyle = "black";
+    ctx.font = "10pt Helvetica";
+    ctx.fillText("GAME OVER", width/2 - 60, height/2 - 50);
+    ctx.fillText("SCORE: " + points, width/2 - 60, height/2 - 50);
+  }, 100)
 }
 gameLoop();
