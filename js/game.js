@@ -232,10 +232,13 @@ var checkCollision = function(){
   })
 }
 ///////////////// catching
-// var numberOf = 7,
-//   platforms = [],
-//   platformWidth = 70,
-//   platformHeight = 20;
+// var rabbit  = function(){
+//   var that = this;
+//   that.image = new Image();
+//   that.image.src = "images/toy_bunny.png";
+//   that.width = 24;
+//   that.height = 24;
+// }
 
 
 /////////////// game loop
@@ -258,7 +261,7 @@ var gameLoop = function(){
     platform.draw();
   });
   checkCollision();
-  ctx.fillStyle = "black";
+  ctx.fillStyle = "white";
   ctx.fillText("Points:" + points, 10, height-10);
   if (state)
     gLoop = setTimeout(gameLoop, 1000/50);
@@ -270,7 +273,7 @@ var gameOver = function(){
   clearTimeout(gLoop);
   setTimeout(function(){
     clear();
-    ctx.fillStyle = "black";
+    ctx.fillStyle = "white";
     ctx.font = "10pt Helvetica";
     ctx.fillText("GAME OVER", width/2 - 60, height/2 - 50);
     ctx.fillText("SCORE: " + points, width/2 - 60, height/2 - 30);
