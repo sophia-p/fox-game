@@ -2,7 +2,7 @@
   "name": "fox-game",
   "version": "1.0.0",
   "description": "Try to make the fox stay afloat",
-  "main": "index.js",
+  "main": "js/game.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
