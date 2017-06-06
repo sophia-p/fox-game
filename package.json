@@ -1,0 +1,19 @@
+{
+  "name": "fox-game",
+  "version": "1.0.0",
+  "description": "Try to make the fox stay afloat",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sophia-p/side-scroller-game.git"
+  },
+  "author": "Sophia Pignatelli",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sophia-p/side-scroller-game/issues"
+  },
+  "homepage": "https://github.com/sophia-p/side-scroller-game#readme"
+}
